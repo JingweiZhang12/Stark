@@ -6,8 +6,8 @@ from lib.train.admin import TensorboardWriter
 import torch
 import time
 from torch.utils.data.distributed import DistributedSampler
-from torch.cuda.amp import autocast
-from torch.cuda.amp import GradScaler
+# from torch.cuda.amp import autocast
+# from torch.cuda.amp import GradScaler
 
 
 class LTRTrainer(BaseTrainer):
@@ -72,7 +72,6 @@ class LTRTrainer(BaseTrainer):
             else:
                 with autocast():
                     loss, stats = self.actor(data)
-
             # backward pass and update weights
             if loader.training:
                 self.optimizer.zero_grad()
