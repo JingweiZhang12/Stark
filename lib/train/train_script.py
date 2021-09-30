@@ -42,7 +42,10 @@ def run(settings):
     if settings.local_rank in [-1, 0]:
         if not os.path.exists(log_dir):
             os.makedirs(log_dir)
-    settings.log_file = os.path.join(log_dir, "%s-%s.log" % (settings.script_name, settings.config_name))
+    if settings.log_name:
+        settings.log_file = os.path.join(log_dir, "%s-%s-%s.log" % (settings.log_name, settings.script_name, settings.config_name))
+    else:
+        settings.log_file = os.path.join(log_dir, "%s-%s.log" % (settings.script_name, settings.config_name))
 
     # Build dataloaders
     loader_train, loader_val = build_dataloaders(cfg, settings)
