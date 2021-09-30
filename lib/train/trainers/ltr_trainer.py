@@ -90,7 +90,8 @@ class LTRTrainer(BaseTrainer):
             self._update_stats(stats, batch_size, loader)
 
             # print statistics
-            self._print_stats(i, loader, batch_size)
+            if self.settings.local_rank in [-1, 0]:
+                self._print_stats(i, loader, batch_size)
 
     def train_epoch(self):
         """Do one epoch for each loader."""
