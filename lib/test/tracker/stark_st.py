@@ -70,12 +70,12 @@ class STARK_ST(BaseTracker):
         # get the t-th search region
         x_patch_arr, resize_factor, x_amask_arr = sample_target(image, self.state, self.params.search_factor,
                                                                 output_sz=self.params.search_size)  # (x1, y1, w, h)
-        search = self.preprocessor.process(x_patch_arr, x_amask_arr)
+        search = self.preprocessor.process(x_patch_arr, x_amask_arr) # NestedTensor(img_tensor_norm, amask_tensor)
         with torch.no_grad():
-            x_dict = self.network.forward_backbone(search)
+            x_dict = self.network.forward_backbone(search) # Dict[str, NestedTensor]
             # merge the template and the search
-            feat_dict_list = self.z_dict_list + [x_dict]
-            seq_dict = merge_template_search(feat_dict_list)
+            feat_dict_list = self.z_dict_list + [x_dict] # [z_dict, x_dict]
+            seq_dict = merge_template_search(feat_dict_list) # dict {'feat':tensor (merged from z,x), 'mask':tensor, 'pos':tensor}
             # run the transformer
             out_dict, _, _ = self.network.forward_transformer(seq_dict=seq_dict, run_box_head=True, run_cls_head=True)
         # get the final result
