@@ -72,7 +72,8 @@ class STARK_ST(BaseTracker):
                                                                 output_sz=self.params.search_size)  # (x1, y1, w, h)
         search = self.preprocessor.process(x_patch_arr, x_amask_arr) # NestedTensor(img_tensor_norm, amask_tensor)
         with torch.no_grad():
-            x_dict = self.network.forward_backbone(search) # Dict[str, NestedTensor]
+            # Dict['feat':tensor(HWxBxC), 'mask':tensor(BxHW), 'pos':tensor(HWxBxC)]
+            x_dict = self.network.forward_backbone(search)
             # merge the template and the search
             feat_dict_list = self.z_dict_list + [x_dict] # [z_dict, x_dict]
             seq_dict = merge_template_search(feat_dict_list) # dict {'feat':tensor (merged from z,x), 'mask':tensor, 'pos':tensor}

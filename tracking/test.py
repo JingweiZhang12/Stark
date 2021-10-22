@@ -43,7 +43,7 @@ def main():
     parser.add_argument('--sequence', type=str, default=None, help='Sequence number or name.')
     parser.add_argument('--debug', type=int, default=0, help='Debug level.')
     parser.add_argument('--threads', type=int, default=0, help='Number of threads.')
-    parser.add_argument('--num_gpus', type=int, default=8)
+    parser.add_argument('--num_gpus', type=int, default=4)
 
     args = parser.parse_args()
 

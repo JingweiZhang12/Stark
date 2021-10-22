@@ -32,24 +32,24 @@ def sample_target(im, target_bb, search_area_factor, output_sz=None, mask=None):
     if crop_sz < 1:
         raise Exception('Too small bounding box.')
 
-    x1 = round(x + 0.5 * w - crop_sz * 0.5)
+    x1 = round(x + 0.5 * w - crop_sz * 0.5) # left corner from bbox to the croped patch
     x2 = x1 + crop_sz
 
     y1 = round(y + 0.5 * h - crop_sz * 0.5)
     y2 = y1 + crop_sz
 
-    x1_pad = max(0, -x1)
+    x1_pad = max(0, -x1) # the padded size
     x2_pad = max(x2 - im.shape[1] + 1, 0)
 
     y1_pad = max(0, -y1)
-    y2_pad = max(y2 - im.shape[0] + 1, 0)
+    y2_pad = max(y2 - im.shape[0] + 1, 0) # the 
 
     # Crop target
     im_crop = im[y1 + y1_pad:y2 - y2_pad, x1 + x1_pad:x2 - x2_pad, :]
     if mask is not None:
         mask_crop = mask[y1 + y1_pad:y2 - y2_pad, x1 + x1_pad:x2 - x2_pad]
 
-    # Pad
+    # the size of im_crop may not equal to the output_sz, need pad
     im_crop_padded = cv.copyMakeBorder(im_crop, y1_pad, y2_pad, x1_pad, x2_pad, cv.BORDER_CONSTANT)
     # deal with attention mask
     H, W, _ = im_crop_padded.shape
@@ -59,7 +59,7 @@ def sample_target(im, target_bb, search_area_factor, output_sz=None, mask=None):
         end_y = None
     if x2_pad == 0:
         end_x = None
-    att_mask[y1_pad:end_y, x1_pad:end_x] = 0
+    att_mask[y1_pad:end_y, x1_pad:end_x] = 0 # 0 denotes valid part
     if mask is not None:
         mask_crop_padded = F.pad(mask_crop, pad=(x1_pad, x2_pad, y1_pad, y2_pad), mode='constant', value=0)
 

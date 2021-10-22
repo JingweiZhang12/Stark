@@ -1,5 +1,5 @@
 echo "****************** Installing pytorch ******************"
-conda install -y pytorch==1.5.1 torchvision==0.6.1 cudatoolkit=10.2 -c pytorch
+#conda install -y pytorch==1.5.1 torchvision==0.6.1 cudatoolkit=10.2 -c pytorch
 
 echo ""
 echo ""
@@ -40,6 +40,7 @@ echo ""
 echo ""
 echo "****************** Installing jpeg4py python wrapper ******************"
 apt-get install libturbojpeg
+
 pip install jpeg4py
 
 echo ""

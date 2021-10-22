@@ -207,8 +207,8 @@ class Tracker:
                 cv.putText(frame_disp, 'Select target ROI and press ENTER', (20, 30), cv.FONT_HERSHEY_COMPLEX_SMALL,
                            1.5, (0, 0, 0), 1)
 
-                x, y, w, h = cv.selectROI(display_name, frame_disp, fromCenter=False)
-                init_state = [x, y, w, h]
+                # x, y, w, h = cv.selectROI(display_name, frame_disp, fromCenter=False)
+                init_state = [318, 141, 109, 116]
                 tracker.initialize(frame, _build_init_info(init_state))
                 output_boxes.append(init_state)
                 break
