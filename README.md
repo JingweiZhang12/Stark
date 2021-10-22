@@ -115,7 +115,7 @@ python lib/test/utils/transform_got10k.py --tracker_name stark_st --cfg_name bas
 ```
 - TrackingNet
 ```
-GPUS_PER_NODE=2 tools/slurm_test.sh mediaf stark_test 2 stark_st baseline --dataset trackingnet --threads 8 --num_gpus 22
+GPUS_PER_NODE=2 tools/slurm_test.sh mediaf stark_test 2 stark_st baseline --dataset trackingnet --threads 8 --num_gpus 2
 python lib/test/utils/transform_trackingnet.py --tracker_name stark_st --cfg_name baseline
 ```
 - VOT2020  
