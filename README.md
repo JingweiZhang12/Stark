@@ -91,8 +91,8 @@ Training with multiple GPUs using DDP
 # STARK-S50
 python tracking/train.py --script stark_s --config baseline --save_dir . --mode multiple --nproc_per_node 8  # STARK-S50
 # STARK-ST50
-python tracking/train.py --script stark_st1 --config baseline --save_dir . --mode multiple --nproc_per_node 8  # STARK-ST50 Stage1
-python tracking/train.py --script stark_st2 --config baseline --save_dir . --mode multiple --nproc_per_node 8 --script_prv stark_st1 --config_prv baseline  # STARK-ST50 Stage2
+GPUS_PER_NODE=8 tools/slurm_train.sh mediaf stark_train 8 --script stark_st1 --config baseline --save_dir .  # STARK-ST50 Stage1
+GPUS_PER_NODE=8 tools/slurm_train.sh mediaf stark_train 8 --script stark_st2 --config baseline --save_dir . --script_prv stark_st1 --config_prv baseline  # STARK-ST50 Stage2
 # STARK-ST101
 python tracking/train.py --script stark_st1 --config baseline_R101 --save_dir . --mode multiple --nproc_per_node 8  # STARK-ST101 Stage1
 python tracking/train.py --script stark_st2 --config baseline_R101 --save_dir . --mode multiple --nproc_per_node 8 --script_prv stark_st1 --config_prv baseline_R101  # STARK-ST101 Stage2
@@ -105,7 +105,7 @@ python tracking/train.py --script stark_s --config baseline --save_dir . --mode 
 
 - LaSOT
 ```
-python tracking/test.py stark_st baseline --dataset lasot --threads 32
+GPUS_PER_NODE=2 tools/slurm_test.sh mediaf stark_test 2 stark_st baseline --dataset lasot --threads 8 --num_gpus 2
 python tracking/analysis_results.py # need to modify tracker configs and names
 ```
 - GOT10K-test
@@ -115,7 +115,7 @@ python lib/test/utils/transform_got10k.py --tracker_name stark_st --cfg_name bas
 ```
 - TrackingNet
 ```
-python tracking/test.py stark_st baseline --dataset trackingnet --threads 32
+GPUS_PER_NODE=2 tools/slurm_test.sh mediaf stark_test 2 stark_st baseline --dataset trackingnet --threads 8 --num_gpus 22
 python lib/test/utils/transform_trackingnet.py --tracker_name stark_st --cfg_name baseline
 ```
 - VOT2020  
